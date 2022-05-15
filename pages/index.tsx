@@ -33,7 +33,7 @@ export default function Bones() {
     <div className="pt-8 pb-80 sm:pt-12 sm:pb-40 lg:pt-24 lg:pb-48">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
         <Head>
-          <title>Temporal + Next.js Example</title>
+          <title>BUY SOMETHIN&apos; WILL YA!</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <header className="relative overflow-hidden">
