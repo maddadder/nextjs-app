@@ -14,7 +14,12 @@ export default async function startBuy(req, res) {
   }
   // Connect to localhost with default ConnectionOptions,
   // pass options to the Connection constructor to configure TLS and other settings.
-  const connection = new Connection();
+  const connection = new Connection({
+    // // Connect to localhost with default ConnectionOptions.
+    // // In production, pass options to the Connection constructor to configure TLS and other settings:
+     address: 'temporaltest-frontend-headless', // as provisioned
+    // tls: {} // as provisioned
+  });
   // Workflows will be started in the "default" namespace unless specified otherwise
   // via options passed the WorkflowClient constructor.
   const client = new WorkflowClient(connection.service);

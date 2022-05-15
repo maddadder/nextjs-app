@@ -53,8 +53,29 @@ This example makes two decisions which often generate questions:
    - Temporal Clients use gRPC to talk to Temporal Server, therefore it is easier to do it from the serverside than from the browser, particularly where auth secrets are involved
    - However we do have users that use `grpc-web` on the frontend directly and do authz on the backend through authz middleware on an ambassador router/envoy proxy. Ask in our Slack for more info.
 
+### Initial setup
+```
+git clone https://github.com/temporalio/helm-charts
+# cd into that folder
+helm dependencies update
+helm install \
+    --set server.replicaCount=1 \
+    --set cassandra.config.cluster_size=1 \
+    --set prometheus.enabled=false \
+    --set grafana.enabled=false \
+    --set elasticsearch.enabled=false \
+    temporaltest . --timeout 15m
+kubectl port-forward services/temporaltest-frontend-headless 7233:7233 --address 0.0.0.0
+#open new console
+kubectl port-forward services/temporaltest-web 8088:8088 --address 0.0.0.0
+#open new console
+docker run --rm -it --entrypoint /bin/bash --network host --env TEMPORAL_CLI_ADDRESS=localhost:7233 temporalio/admin-tools:1.14.0
+tctl --namespace default namespace register
+```
+
 ## Deploy
-
-We haven't worked out the deploy story yet but eventually we'd love for you to deploy this example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+```
+docker-compose build
+docker push 192.168.1.151:32000/nextjs-app:1.0.13
+helm install nextjs-app ./nextjs-app
+```

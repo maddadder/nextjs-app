@@ -6,8 +6,13 @@ export default async function queryState(req, res) {
     res.status(405).send({ message: 'must send workflow id to query' });
     return;
   }
-
-  const client = new WorkflowClient();
+  const connection = new Connection({
+    // // Connect to localhost with default ConnectionOptions.
+    // // In production, pass options to the Connection constructor to configure TLS and other settings:
+     address: 'temporaltest-frontend-headless', // as provisioned
+    // tls: {} // as provisioned
+  });
+  const client = new WorkflowClient(connection.service);
   console.log({ id });
   const workflow = client.getHandle(id);
   try {
