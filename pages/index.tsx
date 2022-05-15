@@ -39,24 +39,19 @@ export default function Bones() {
         <header className="relative overflow-hidden">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font font-extrabold tracking-tight text-gray-900 sm:text-6xl">
-              Temporal.io + Next.js One Click Purchase Demo
+              BUY SOMETHIN&apos; WILL YA!
             </h1>
             <p className="mt-4 text-xl text-gray-500">
-              Buy something, then change your mind. Or maybe not. Whatever you decide, Temporal makes it easy to add
-              async processes with high reliability.
+              Buy something, then change your mind. Or maybe not. 
             </p>
           </div>
         </header>
         <ToastContainer />
         <ProductList />
         <p className="mt-4 text-xl text-gray-500">
-          Find more{' '}
-          <a className="text-blue-400" href="https://github.com/temporalio/samples-typescript">
-            TypeScript SDK samples
-          </a>{' '}
-          or{' '}
-          <a className="text-blue-400" href="https://temporal.io/typescript">
-            browse our docs
+          Source code on{' '}
+          <a className="text-blue-400" href="https://github.com/maddadder/nextjs-app">
+            github
           </a>
           .
         </p>
