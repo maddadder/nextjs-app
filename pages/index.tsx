@@ -43,8 +43,7 @@ export default function Bones({ data }) {
               BUY SOMETHIN&apos; WILL YA!
             </h1>
             <p className="mt-4 text-xl text-gray-500">
-              Buy something, then change your mind. Or maybe not. 
-              
+              Buy some NFTs, then change your mind. Or maybe not. 
             </p>
           </div>
         </header>

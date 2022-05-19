@@ -76,7 +76,7 @@ tctl --namespace default namespace register
 ## Deploy
 ```
 docker-compose build
-docker push 192.168.1.151:32000/nextjs-app:1.22.42
+docker push 192.168.1.151:32000/nextjs-app:1.22.44
 helm install nextjs-app ./nextjs-app
 ```
 
