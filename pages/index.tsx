@@ -3,9 +3,6 @@ import React from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import key from '../public/key.png';
-import shield from '../public/shield.png';
-import candle from '../public/candle.png';
 import Image from 'next/image'
 
 function fetchAPI(str, obj?: RequestInit) {
@@ -150,9 +147,7 @@ function Product({ product }) {
       <div className="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100 text-center">
         {/* eslint-disable @next/next/no-img-element */}
         <a href={product.href} target={product.target}>
-          <Image src={key} />
-          <Image src={shield} />
-          <Image src={candle} />
+          <img src={product.imgHref} alt={product.content} style={{ width: "100%" }} />
         </a>
         <div className="flex items-end p-4" aria-hidden="true">
           {
@@ -201,7 +196,7 @@ function Product({ product }) {
         </div>
       </div>
       <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
-        <h3>{product.content}</h3>
+        <h3><a href={product.href} target={product.target}>{product.content}</a></h3>
         <p>$1.00</p>
       </div>
       <p className="mt-1 text-sm text-gray-500">Category:Links</p>
@@ -211,7 +206,7 @@ function Product({ product }) {
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`https://nextjs-app.leenet.link/api/userLink`)
+  const res = await fetch(`https://nextjs-app.leenet.link/api/userLink?search=http&limit=100`)
   const data = await res.json()
 
   // Pass data to the page via props
