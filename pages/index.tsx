@@ -3,6 +3,10 @@ import React from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import key from '../public/key.png';
+import shield from '../public/shield.png';
+import candle from '../public/candle.png';
+import Image from 'next/image'
 
 function fetchAPI(str, obj?: RequestInit) {
   return fetch(str, obj)
@@ -28,7 +32,7 @@ function fetchAPI(str, obj?: RequestInit) {
     });
 }
 
-export default function Bones() {
+export default function Bones({ data }) {
   return (
     <div className="pt-8 pb-80 sm:pt-12 sm:pb-40 lg:pt-24 lg:pb-48">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
@@ -43,11 +47,12 @@ export default function Bones() {
             </h1>
             <p className="mt-4 text-xl text-gray-500">
               Buy something, then change your mind. Or maybe not. 
+              
             </p>
           </div>
         </header>
         <ToastContainer />
-        <ProductList />
+        <ProductList products={data} />
         <p className="mt-4 text-xl text-gray-500">
           Source code on{' '}
           <a className="text-blue-400" href="https://github.com/maddadder/nextjs-app">
@@ -60,56 +65,13 @@ export default function Bones() {
   );
 }
 
-const products = [
-  {
-    id: 1,
-    name: 'Fusion',
-    category: 'Icon set',
-    href: '#',
-    price: '$49',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-01.jpg',
-    imageAlt:
-      'Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background.',
-  },
-  {
-    id: 2,
-    name: 'Icons',
-    category: 'Icon set',
-    href: '#',
-    price: '$49',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-02.jpg',
-    imageAlt:
-      'Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background.',
-  },
-  {
-    id: 3,
-    name: 'Scaffold',
-    category: 'Icon set',
-    href: '#',
-    price: '$49',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-03.jpg',
-    imageAlt:
-      'Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background.',
-  },
-  {
-    id: 4,
-    name: 'Bone',
-    category: 'Icon set',
-    href: '#',
-    price: '$49',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-04.jpg',
-    imageAlt:
-      'Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background.',
-  },
-];
-
-function ProductList() {
+function ProductList({products}) {
   return (
     <div className="bg-white">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 md:grid-cols-4">
           {products.map((product) => (
-            <Product product={product} key={product.id} />
+            <Product product={product} key={product.pid} />
           ))}
         </div>
       </div>
@@ -120,7 +82,7 @@ function ProductList() {
 type ITEMSTATE = 'NEW' | 'SENDING' | 'ORDERED' | 'CONFIRMED' | 'CANCELLING' | 'ERROR';
 
 function Product({ product }) {
-  const itemId = product.id;
+  const itemId = product.pid;
   const [state, setState] = React.useState<ITEMSTATE>('NEW');
   const stateRef = React.useRef<ITEMSTATE>();
   stateRef.current = state;
@@ -184,10 +146,14 @@ function Product({ product }) {
     }
   }
   return (
-    <div key={product.id} className="relative group">
-      <div className="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
+    <div key={product.pid} className="relative group">
+      <div className="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100 text-center">
         {/* eslint-disable @next/next/no-img-element */}
-        <img src={product.imageSrc} alt={product.imageAlt} className="object-center object-cover" />
+        <a href={product.href} target={product.target}>
+          <Image src={key} />
+          <Image src={shield} />
+          <Image src={candle} />
+        </a>
         <div className="flex items-end p-4" aria-hidden="true">
           {
             {
@@ -235,10 +201,19 @@ function Product({ product }) {
         </div>
       </div>
       <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
-        <h3>{product.name}</h3>
-        <p>{product.price}</p>
+        <h3>{product.content}</h3>
+        <p>$1.00</p>
       </div>
-      <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+      <p className="mt-1 text-sm text-gray-500">Category:Links</p>
     </div>
   );
+}
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://nextjs-app.leenet.link/api/userLink`)
+  const data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { data } }
 }
