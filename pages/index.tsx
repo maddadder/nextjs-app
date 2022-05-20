@@ -75,7 +75,7 @@ function ProductList({products}) {
   );
 }
 
-type ITEMSTATE = 'NEW' | 'SENDING' | 'ORDERED' | 'CONFIRMED' | 'CANCELLING' | 'ERROR';
+type ITEMSTATE = 'NEW' | 'SENDING' | 'ORDERED' | 'CONFIRMED' | 'CANCELLING' | 'ERROR' | 'PURCHASE_PENDING' | 'PURCHASE_CONFIRMED' | 'PURCHASE_CANCELED';
 
 function Product({ product }) {
   const itemId = product.pid;
@@ -119,15 +119,16 @@ function Product({ product }) {
       });
     });
   }
-  // function getState() {
-  //   if (workflowId) {
-  //     setState('SENDING');
-  //     fetchAPI('/api/getBuyState?id=' + workflowId).then((x) => setState(x.purchaseState))
-  //       .catch(err => setState(err))
-  //   }
-  // }
+  function getState() {
+    if (state != "NEW") {
+      console.log(state)
+      setState('SENDING');
+      fetchAPI('/api/getBuyState?id=' + transactionId).then((x) => setState(x.purchaseState))
+        .catch(err => setState(err))
+    }
+  }
   function cancelBuy() {
-    if (state === 'ORDERED') {
+    if (state === 'ORDERED' || state === 'PURCHASE_PENDING') {
       setState('CANCELLING');
       fetchAPI('/api/cancelBuy?id=' + transactionId).catch((err) => {
         setState('ERROR');
@@ -159,6 +160,14 @@ function Product({ product }) {
                   Buy Now
                 </button>
               ),
+              PURCHASE_CANCELED: (
+                <button
+                  onClick={buyProduct}
+                  className="w-full bg-white hover:bg-blue-200 bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center"
+                >
+                  Buy Now
+                </button>
+              ),
               SENDING: (
                 <div className="w-full bg-white hover:bg-blue-200 bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center">
                   Sending...
@@ -172,9 +181,22 @@ function Product({ product }) {
                   Click to Cancel
                 </button>
               ),
+              PURCHASE_PENDING: (
+                <button
+                  onClick={cancelBuy}
+                  className="w-full bg-white hover:bg-blue-200 bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center"
+                >
+                  Click to Cancel
+                </button>
+              ),
               CONFIRMED: (
                 <div className="w-full  opacity-100 bg-white bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center">
                   Purchased!
+                </div>
+              ),
+              PURCHASE_CONFIRMED: (
+                <div className="w-full  opacity-100 bg-white bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center">
+                  Purchased Confirmed
                 </div>
               ),
               CANCELLING: (
@@ -199,6 +221,14 @@ function Product({ product }) {
         <p>$1.00</p>
       </div>
       <p className="mt-1 text-sm text-gray-500">Category:Links</p>
+      <p>
+        <button
+          onClick={getState}
+          className="w-full bg-white hover:bg-blue-200 bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center"
+          >
+          Get Status
+        </button>
+      </p>
     </div>
   );
 }

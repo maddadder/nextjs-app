@@ -1,5 +1,4 @@
-import { WorkflowClient } from '@temporalio/client';
-
+import { Connection, WorkflowClient } from '@temporalio/client';
 export default async function queryState(req, res) {
   const { id } = req.query;
   if (!id) {

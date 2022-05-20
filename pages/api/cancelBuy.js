@@ -1,4 +1,4 @@
-import { WorkflowClient } from '@temporalio/client';
+import { Connection, WorkflowClient } from '@temporalio/client';
 
 export default async function cancelBuy(req, res) {
   const { id } = req.query;

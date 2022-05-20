@@ -3,7 +3,7 @@ version: '2'
 services:
 
   nextjs-app:
-    image: 192.168.1.151:32000/nextjs-app:1.22.58
+    image: 192.168.1.151:32000/nextjs-app:1.22.66
     build:
       context: ./
       dockerfile: ./Dockerfile
