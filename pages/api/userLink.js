@@ -48,9 +48,9 @@ export default async function handler(req, res) {
             const newDoc = {
               __T: 'ul',
               Pid: result.content.Pid,
-              Content: body.Content ? body.Content : result.content.Content,
-              Href: body.Href ? body.Href : result.content.Href,
-              Target: body.Target ? body.Target : result.content.Target
+              Content: body.Content ? body.Content : result.content.content,
+              Href: body.Href ? body.Href : result.content.href,
+              Target: body.Target ? body.Target : result.content.target
             }
 
             /* Persist updates with new doc */

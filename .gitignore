@@ -37,3 +37,4 @@ yarn-error.log*
 
 temporal/lib
 .env.default
+temporal/src/util/environment.ts
