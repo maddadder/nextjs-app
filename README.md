@@ -76,8 +76,8 @@ tctl --namespace default namespace register
 ## Deploy
 ```
 docker-compose build
-docker push 192.168.1.151:32000/nextjs-app:1.22.67
-helm install nextjs-app ./nextjs-app
+docker push 192.168.1.151:32000/nextjs-app:1.22.69
+helm upgrade nextjs-app ./nextjs-app
 ```
 
 ### Couchbase

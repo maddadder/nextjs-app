@@ -3,7 +3,6 @@ import React from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Image from 'next/image'
 
 function fetchAPI(str, obj?: RequestInit) {
   return fetch(str, obj)
@@ -220,7 +219,7 @@ function Product({ product }) {
         <h3><a href={product.href} target={product.target}>{product.content}</a></h3>
         <p>$1.00</p>
       </div>
-      <p className="mt-1 text-sm text-gray-500">Category:Links</p>
+      <p className="mt-1 text-sm text-gray-500">Category:{product.category}</p>
       <p>
         <button
           onClick={getState}
