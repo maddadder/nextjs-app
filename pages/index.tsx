@@ -73,6 +73,24 @@ function ProductList({products}) {
     </div>
   );
 }
+function RenderImage({product}) {
+  if(product.imgHref) {
+    return (
+      <img src={product.imgHref} alt={product.content} style={{ width: "100%" }} />
+    );
+  }
+  else if(product.imgContent)
+  {
+    return (
+      <img src={"data:image/jpg;base64," + product.imgContent} alt={product.content} style={{ width: "100%" }} />
+    );
+  }
+  else{
+    return (
+      <span></span>
+    );
+  }
+}
 
 type ITEMSTATE = 'NEW' | 'SENDING' | 'ORDERED' | 'CONFIRMED' | 'CANCELLING' | 'ERROR' | 'PURCHASE_PENDING' | 'PURCHASE_CONFIRMED' | 'PURCHASE_CANCELED';
 
@@ -146,7 +164,7 @@ function Product({ product }) {
       <div className="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100 text-center">
         {/* eslint-disable @next/next/no-img-element */}
         <a href={product.href} target={product.target}>
-          <img src={product.imgHref} alt={product.content} style={{ width: "100%" }} />
+        <RenderImage product={product} />
         </a>
         <div className="flex items-end p-4" aria-hidden="true">
           {
