@@ -76,8 +76,8 @@ tctl --namespace default namespace register
 ## Deploy
 ```
 docker-compose build
-docker push 192.168.1.151:32000/nextjs-app:1.22.72
-helm upgrade nextjs-app ./nextjs-app
+docker push 192.168.1.151:32000/nextjs-app:1.22.76
+helm upgrade nextjs-app --set couchbasePassword=$COUCHBASE_PASSWORD ./nextjs-app
 ```
 
 ### Couchbase

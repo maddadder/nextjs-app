@@ -1,8 +1,10 @@
 import {connectToDatabase} from "../../util/couchbase";
 import bcrypt from 'bcryptjs'
 import { v4 } from 'uuid'
+import { getEnv } from '../../temporal/src/util/environment';
 
 export default async function handler(req, res) {
+  const environment = getEnv()
   const {cluster, bucket, defaultCollection} = await connectToDatabase();
   // Parse the body only if it is present
   let body = !!req.body ? JSON.parse(req.body) : null;
@@ -78,12 +80,12 @@ export default async function handler(req, res) {
       }
       const query = options.parameters.SEARCH == null ? `
         SELECT p.*
-        FROM ${process.env.COUCHBASE_BUCKET}._default._default p
+        FROM ${environment.COUCHBASE_BUCKET}._default._default p
         WHERE p.__T = 'ul'
         LIMIT $LIMIT OFFSET $SKIP;
         ` : `
         SELECT p.*
-        FROM ${process.env.COUCHBASE_BUCKET}._default._default p
+        FROM ${environment.COUCHBASE_BUCKET}._default._default p
         WHERE p.__T = 'ul' AND lower(p.href) LIKE $SEARCH
         LIMIT $LIMIT OFFSET $SKIP;
       `

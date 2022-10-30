@@ -14,6 +14,13 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+couchbaseUser: Administrator
+couchbasePassword: Password
+couchbaseEndpoint: my-couchbase.default.svc.cluster.local
+couchbaseBucket: default
+isCapella: "false"
+temporalAddress: temporaltest-frontend-headless.default.svc.cluster.local
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
